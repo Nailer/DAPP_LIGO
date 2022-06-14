@@ -9,7 +9,7 @@ type taco_shop_storage is map (nat, taco_supply)
 type return is list (operation) * taco_shop_storage
 
 const ownerAddress : address =
-  ("tz1QaycaErELKZ8CBkYRXPFoys9TZvBVepFq" : address)
+  ("tz1TGu6TN5GSez2ndXXeDX6LgUDvLzPLqgYV" : address)
 
 function buy_taco (const taco_kind_index : nat ; var taco_shop_storage : taco_shop_storage) : return is {
   // Retrieve the taco_kind from the contract's storage or fail
@@ -32,18 +32,8 @@ function buy_taco (const taco_kind_index : nat ; var taco_shop_storage : taco_sh
   // Update the storage with the refreshed taco_kind
   taco_shop_storage[taco_kind_index] := taco_kind;
 
-  const receiver : contract (unit) =
-    case (Tezos.get_contract_opt (ownerAddress): option(contract(unit))) of [
-      Some (contract) -> contract
-    | None -> (failwith ("Not a contract") : (contract(unit)))
-    ];
-
-  const payoutOperation : operation = Tezos.transaction (unit, Tezos.amount, receiver);
-  const operations : list(operation) = list [payoutOperation]
-} with ((operations : list (operation)), taco_shop_storage)
-
-const ownerAddress : address = ("tz1TGu6TN5GSez2ndXXeDX6LgUDvLzPLqgYV" : address);
-const donationAddress : address = ("tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" : address);
+  const ownerAddress : address = ("tz1SLY8y5Z2V1pwojurXWdJKZjC5XjLZn9Ue" : address);
+ const donationAddress : address = ("tz1KqTpEZ7Yob7QbPE4Hy4Wo8fHG8LhKxZSx" : address);
 
 const receiver : contract (unit) =
   case (Tezos.get_contract_opt (ownerAddress) : option(contract(unit))) of [
